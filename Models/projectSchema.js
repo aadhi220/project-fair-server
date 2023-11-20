@@ -17,7 +17,7 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  linkdin: {
+  website: {
     type: String,
     required: true,
   },
