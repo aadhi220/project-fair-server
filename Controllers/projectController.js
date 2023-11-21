@@ -47,6 +47,7 @@ exports.allUserProjects = async (req, res) => {
 exports.getallProjects = async (req, res) => {
   try {
     const allProjects = await projects.find();
+    res.status(200).json(allProjects);
   } catch (err) {
     res.status(401).json(err);
   }
