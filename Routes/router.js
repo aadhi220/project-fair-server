@@ -19,3 +19,8 @@ router.get('/projects/all' , jwtMiddleware, projectController. getallProjects)
 //gethomeprojects
 router.get('/projects/home-projects', projectController.getHomeProjects)
 module.exports = router;
+//edit user projects
+router.get('/projects/edit',jwtMiddleware,multerConfig.single('thumbnail'), projectController.EditUserProjects)
+module.exports = router;
+
+

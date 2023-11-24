@@ -65,3 +65,14 @@ exports.getHomeProjects = async (req, res) => {
     res.status(401).json(err);
   }
 };
+
+exports.EditUserProjects =async (projectId,req,res)=>{
+  const userId = req.payload;
+  const {title,languages,overview,github,website}=req.body;
+
+  try{
+    const existingProject =await projects.findByIdAndUpdate(projectId)
+    console.log(existingProject);
+  }catch{}
+  
+}
