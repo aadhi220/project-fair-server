@@ -45,10 +45,10 @@ exports.allUserProjects = async (req, res) => {
 
 // getallprojects- token required
 exports.getallProjects = async (req, res) => {
-  const searchKey =req.query.search
-  const query ={ 
-    languages:{$regex:searchKey,$options:"i"}
-  }
+  const searchKey = req.query.search;
+  const query = {
+    languages: { $regex: searchKey, $options: "i" },
+  };
   try {
     const allProjects = await projects.find(query);
     res.status(200).json(allProjects);
@@ -66,13 +66,42 @@ exports.getHomeProjects = async (req, res) => {
   }
 };
 
-exports.EditUserProjects =async (projectId,req,res)=>{
-  const userId = req.payload;
-  const {title,languages,overview,github,website}=req.body;
+exports.editUserProjects = async (req, res) => {
+  const { id } = req.params;
 
-  try{
-    const existingProject =await projects.findByIdAndUpdate(projectId)
-    console.log(existingProject);
-  }catch{}
+  const userId = req.payload;
+
+  const { title, languages, overview, github, website ,thumbnail    } = req.body;
+
+  const uploadedImage = req.file ? req.file.filename : thumbnail;
+
+  try {
+    const updateProject = await projects.findByIdAndUpdate(
+      { _id: id },
+      {
+        title,
+        languages,
+        overview,
+        github,
+        website,
+        thumbnail: uploadedImage,
+        userId,
+      },
+      { new: true }
+    );
+    await updateProject.save();
+    res.status(200).json(updateProject);
+    console.log(updateProject);
+  } catch (err) {
+    res.status(401).json(err);
+  }
+};
+
+exports.deleteUserProject =async (req, res) => {
+  const { id } = req.params;
+  const userId = req.payload;
+  try{const deleteProject =await projects.findByIdAndDelete({_id: id});
+  await deleteProject.delete();
   
+  }catch(err) {console.log(err);}
 }
