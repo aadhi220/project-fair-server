@@ -71,7 +71,7 @@ exports.editUserProjects = async (req, res) => {
 
   const userId = req.payload;
 
-  const { title, languages, overview, github, website ,thumbnail    } = req.body;
+  const { title, languages, overview, github, website, thumbnail } = req.body;
 
   const uploadedImage = req.file ? req.file.filename : thumbnail;
 
@@ -97,11 +97,16 @@ exports.editUserProjects = async (req, res) => {
   }
 };
 
-exports.deleteUserProject =async (req, res) => {
+exports.deleteUserProject = async (req, res) => {
+  //get the project id
   const { id } = req.params;
-  const userId = req.payload;
-  try{const deleteProject =await projects.findByIdAndDelete({_id: id});
-  await deleteProject.delete();
-  
-  }catch(err) {console.log(err);}
-}
+  try {
+    const deleteProject = await projects.findByIdAndDelete({ _id: id });
+   
+    await deleteProject.delete();
+    res.status(200).json(deleteProject);  
+  } catch (err) {
+    res.status(401).json(err);
+    console.log("error deleting project");
+  }
+};

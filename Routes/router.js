@@ -8,6 +8,10 @@ const multerConfig =require('../Middlewares/multerMiddleware')
 router.post("/user/register", userController.register);
 //login
 router.post("/user/login", userController.login);
+
+//edit user profile
+router.put("/user/edit",jwtMiddleware,multerConfig.single('profile'),userController.editUserProfile)
+module.exports = router;
 //add project
 router.post("/projects/add",jwtMiddleware,multerConfig.single('thumbnail'), projectController.addProjects);
 
@@ -23,5 +27,7 @@ module.exports = router;
 router.put('/projects/edit/:id',jwtMiddleware,multerConfig.single('thumbnail'), projectController.editUserProjects)
 module.exports = router;
 
-router.delete('/projects/delete/:id', jwtMiddleware, projectController.deleteUserProject)
+router.delete('/projects/delete/:id',jwtMiddleware, projectController.deleteUserProject)
+
+
 
