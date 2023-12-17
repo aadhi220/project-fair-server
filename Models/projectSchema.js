@@ -29,6 +29,21 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  username:{
+    type:String,
+    required:true,
+  },
+  profilePic:{
+    type:String,
+    
+  },
+  userGit:{
+    type:String
+},
+userLinkdin:{
+    type:String
+}
+
 });
 
 const projects = mongoose.model("projects", projectSchema);

@@ -6,7 +6,7 @@ exports.addProjects = async (req, res) => {
   console.log("inside Add project function");
   const userId = req.payload;
   const thumbnail = req.file.filename;
-  const { title, languages, overview, github, website } = req.body;
+  const { title, languages, overview, github, website,username,profilePic ,userGit ,userLinkdin } = req.body;
   // console.log(`${title},${languages},${overview},${github},${website}, ${userId}`);
 
   try {
@@ -22,6 +22,10 @@ exports.addProjects = async (req, res) => {
         website,
         thumbnail,
         userId,
+        username,
+        profilePic,
+        userGit,
+        userLinkdin
       });
       await newProject.save();
       res.status(200).json(newProject);
@@ -47,7 +51,10 @@ exports.allUserProjects = async (req, res) => {
 exports.getallProjects = async (req, res) => {
   const searchKey = req.query.search;
   const query = {
-    languages: { $regex: searchKey, $options: "i" },
+    $or: [
+      { languages: { $regex: searchKey, $options: "i" } },
+      { username: { $regex: searchKey, $options: "i" } }
+    ]
   };
   try {
     const allProjects = await projects.find(query);
@@ -71,7 +78,7 @@ exports.editUserProjects = async (req, res) => {
 
   const userId = req.payload;
 
-  const { title, languages, overview, github, website, thumbnail } = req.body;
+  const { title, languages, overview, github, website, thumbnail,username,profilePic,userGit ,userLinkdin } = req.body;
 
   const uploadedImage = req.file ? req.file.filename : thumbnail;
 
@@ -86,6 +93,10 @@ exports.editUserProjects = async (req, res) => {
         website,
         thumbnail: uploadedImage,
         userId,
+        username,
+        profilePic,
+        userGit,
+        userLinkdin
       },
       { new: true }
     );
