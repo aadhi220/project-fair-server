@@ -11,12 +11,12 @@ pfServer.use('/uploads',express.static('./uploads'))
 const PORT =4000 || process.env.PORT
 
 pfServer.listen(PORT,()=>{
-    console.log(`project fair server started at port :${PORT} and waiting for client request `);
+    console.log(`project showcase server started at port :${PORT} and waiting for client request `);
 })
 // http get 
 pfServer.get('/',(req,res)=>{
 
-    res.send('<h1> Project fair server started')
+    res.send(`<h1> Server successfully started running on port ${PORT} </h1> <h3><a href="https://project-showcase-mern.vercel.app/" >Redirect to website frontend </a></h3>`)
 })
 
 pfServer.post('/',(req,res)=>{
